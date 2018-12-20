@@ -18,26 +18,27 @@ use hdk::holochain_core_types::{
 };
 
 mod event;
+mod utils;
 
 define_zome! {
     entries: [
-    	event::event_definition()
+        event::event_definition()
     ]
     genesis: || {
-    	Ok(())
+        Ok(())
     }
     functions: {
-		main (Public) {
-			save_event: {
-				inputs: | since : String , until : String |,
-				outputs: |result: ZomeApiResult<Address>|,
-				handler: event::handle_save_event
-			}
-			// get_events: {
-			// 	inputs: | hash : HashString |,
-			// 	outputs: |result: ZomeApiResult<event::GetLinksLoadResult<event::Event>> |,
-			// 	handler: event::handle_get_events
-			// }
-    	}
+        main (Public) {
+            save_event: {
+                inputs: |since: String, until: String|,
+                outputs: |result: ZomeApiResult<Address>|,
+                handler: event::handlers::handle_save_event
+            }
+            get_events: {
+                inputs: |hash: HashString|,
+                outputs: |result:ZomeApiResult<utils::GetLinksLoadResult<event::Event>>|,
+                handler: event::handlers::handle_get_events
+            }
+        }
     }
 }
