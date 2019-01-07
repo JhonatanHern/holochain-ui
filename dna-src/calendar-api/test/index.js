@@ -12,9 +12,16 @@ app.start()
 const testObject = { since: "blah", until: "blah" },
 	testObjectHash = "QmZHsdMdxduJythiLEsvn7ZGpro9TT33KQHL5JUjwm1FvF"
 
-test('Save event', (t) => {
+test('Save event', t => {
 	const result = app.call("calendar", "main", "save_event", testObject)
 	t.deepEqual( result , { Ok : testObjectHash } )
+	t.end()
+})
+
+test('partial array test', t => {
+	const result = app.call("calendar", "main", "get_events", testObjectHash)
+	console.log('REEE ',result)
+	t.equal(true,Array.isArray(result))
 	t.end()
 })
 
