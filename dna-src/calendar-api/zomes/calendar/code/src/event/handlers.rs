@@ -18,10 +18,8 @@ pub fn handle_save_event(since:String, until:String) -> ZomeApiResult<Address> {
 		AppEntryType::from("event"),
 		AppEntryValue::from(event)
 		);
-	hdk::debug(&entry);
     let event_address = hdk::commit_entry(&entry)?;
-	hdk::debug(&event_address);
-    // hdk::link_entries(&hdk::AGENT_ADDRESS, &event_address, "event")?;
+    hdk::link_entries(&hdk::AGENT_ADDRESS, &event_address, "event")?;
     Ok(event_address)
 }
 

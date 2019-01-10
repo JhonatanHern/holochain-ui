@@ -9,19 +9,22 @@ const app = Container.loadAndInstantiate("dist/bundle.json")
 // activate the new instance
 app.start()
 
-const testObject = { since: "blah", until: "blah" },
-	testObjectHash = "QmZHsdMdxduJythiLEsvn7ZGpro9TT33KQHL5JUjwm1FvF"
+const testObject = {
+		since: "2018-12-06T13:30:00-04:00",
+		until: "2018-12-06T14:30:00-04:00"
+	},
+	testObjectHash = "QmYA4YLREc7rEE5g9s9Ak6XL5bUivEfdYSax41MxYUKXjj"
 
-test('Save event', t => {
+test('Save event and retrieve', t => {
 	const result = app.call("calendar", "main", "save_event", testObject)
 	t.deepEqual( result , { Ok : testObjectHash } )
 	t.end()
 })
 
-test('partial array test', t => {
-	const result = app.call("calendar", "main", "get_events", testObjectHash)
-	console.log('REEE ',result)
-	t.equal(true,Array.isArray(result))
+test('Retrieve event', t => {
+	const result = app.call("calendar", "main", "get_events", {hash:testObjectHash})
+	console.log('Result: ',result)
+	t.equal(true,Array.isArray(result.Ok))
 	t.end()
 })
 

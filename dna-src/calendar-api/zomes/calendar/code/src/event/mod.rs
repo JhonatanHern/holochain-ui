@@ -35,18 +35,28 @@ pub fn event_definition() -> ValidatingEntryType {
             Ok(())
         },
         links: [
-            to!(
-                "member",
-                tag: "member_tag",
-
+            from!(
+                "%agent_id",
+                tag: "event",
                 validation_package: || {
-                    hdk::ValidationPackageDefinition::Entry
+                    hdk::ValidationPackageDefinition::ChainFull
                 },
-
-                validation: |_base: Address, _target: Address, _ctx: hdk::ValidationData| {
+                validation: |_source: Address, _target: Address, _ctx: hdk::ValidationData | {
                     Ok(())
                 }
             )
+            // to!(
+            //     "member",
+            //     tag: "member_tag",
+
+            //     validation_package: || {
+            //         hdk::ValidationPackageDefinition::Entry
+            //     },
+
+            //     validation: |_base: Address, _target: Address, _ctx: hdk::ValidationData| {
+            //         Ok(())
+            //     }
+            // )
         ]
     )
 }
